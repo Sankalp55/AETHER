@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block title %}
+AETHER
+{% endblock %}
+
+{% block content %}
+<div class="container ">
+  <div class="form-wrap mx-auto" style="max-width:640px;">
+    <h1 class="text-center mb-5 fw-bold" style="color: #FFD700;">Aether</h1>
+
+    <h3 class="text-center text-light mb-4">
+      {% if form.instance.pk %} Edit Tweet {% else %} Create Tweet {% endif %}
+    </h3>
+
+    <form method="post" enctype="multipart/form-data" class="dark-form p-4">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="d-grid mt-3">
+        <button class="btn btn-warning btn-lg" type="submit">Submit</button>
+      </div>
+    </form>
+
+    <div class="text-center mt-4">
+      <a href="{% url 'tweet_list' %}" class="btn btn-outline-light">Back to Tweet List</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* page */
+  body {
+    background: #1e1e1e;        /* dark grey tone */
+    color: #e4e4e4;
+    min-height: 100vh;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* container */
+  .form-wrap { padding: 10px; }
+
+  /* form box */
+  .dark-form {
+    background: #2b2b2b;        /* slightly lighter grey for contrast */
+    border: 1px solid #3a3a3a;
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  }
+
+  /* form fields */
+  .dark-form p { margin-bottom: 0.75rem; }
+  .dark-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #cccccc;
+    font-size: 0.95rem;
+  }
+  .dark-form input,
+  .dark-form textarea,
+  .dark-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background: #1f1f1f;
+    color: #f0f0f0;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+  .dark-form textarea { min-height: 110px; resize: vertical; }
+
+  .dark-form input::placeholder,
+  .dark-form textarea::placeholder {
+    color: #888;
+  }
+
+  .dark-form input:focus,
+  .dark-form textarea:focus,
+  .dark-form select:focus {
+    outline: none;
+    border-color: #666;
+    box-shadow: 0 0 8px rgba(255,255,255,0.05);
+  }
+
+  /* buttons / links */
+  .btn-warning { --bs-btn-bg: #ffc107; --bs-btn-border-color: #ffc107; color: #111; }
+  .btn-outline-light {
+    color: #e4e4e4;
+    border-color: #666;
+    background: transparent;
+  }
+  .btn-outline-light:hover {
+    background: #333;
+  }
+
+  /* headings */
+  h1, h3 { text-shadow: 0 2px 6px rgba(0,0,0,0.7); }
+
+  /* responsive tweaks */
+  @media (max-width: 576px) {
+    .dark-form { padding: 16px; }
+    h1 { font-size: 1.4rem; }
+  }
+</style>
+{% endblock %}

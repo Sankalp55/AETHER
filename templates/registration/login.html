@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4" style="width: 400px; background: #2b2b2b; border-radius: 10px; border: 1px solid #3a3a3a;">
+    <h2 class="text-center mb-4 text-warning fw-bold">Login</h2>
+    
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="mb-3">
+        <label class="form-label text-light">Username</label>
+        <input type="text" name="username" 
+               class="form-control bg-dark text-light border-secondary rounded-3 focus-yellow" 
+               placeholder="Enter username" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-light">Password</label>
+        <input type="password" name="password" 
+               class="form-control bg-dark text-light border-secondary rounded-3 focus-yellow" 
+               placeholder="Enter password" required>
+      </div>
+
+      <button class="btn btn-warning w-100 fw-bold rounded-pill mt-4">Login</button>
+    </form>
+
+    <p class="text-center text-light mt-3">
+      Don’t have an account? 
+      <a href="{% url 'register' %}" class="text-warning fw-bold">Register here</a>
+    </p>
+  </div>
+</div>
+
+<style>
+  body {
+    background: #1e1e1e !important; /* full-page dark background */
+  }
+
+  .focus-yellow:focus {
+    border-color: #ffc107;
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    outline: none;
+  }
+</style>
+{% endblock %}
