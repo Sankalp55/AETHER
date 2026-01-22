@@ -1,106 +1,161 @@
 {% extends "layout.html" %}
 
 {% block title %}
-AETHER
+AETHER | Compose
 {% endblock %}
 
 {% block content %}
-<div class="container ">
-  <div class="form-wrap mx-auto" style="max-width:640px;">
-    <h1 class="text-center mb-5 fw-bold" style="color: #FFD700;">Aether</h1>
+<div class="container py-5">
+  <div class="form-wrap mx-auto">
 
-    <h3 class="text-center text-light mb-4">
-      {% if form.instance.pk %} Edit Tweet {% else %} Create Tweet {% endif %}
-    </h3>
+    <!-- Title -->
+    <h1 class="text-center aether-title">
+      AETHER
+    </h1>
 
-    <form method="post" enctype="multipart/form-data" class="dark-form p-4">
+    <p class="text-center form-subtitle mb-4">
+      {% if form.instance.pk %}
+        Edit your tweet
+      {% else %}
+        Share your thoughts
+      {% endif %}
+    </p>
+
+    <!-- Form -->
+    <form method="post" enctype="multipart/form-data" class="dark-form">
       {% csrf_token %}
       {{ form.as_p }}
-      <div class="d-grid mt-3">
-        <button class="btn btn-warning btn-lg" type="submit">Submit</button>
+
+      <div class="d-grid mt-4">
+        <button class="btn btn-primary btn-lg" type="submit">
+          {% if form.instance.pk %} Update Tweet {% else %} Publish Tweet {% endif %}
+        </button>
       </div>
     </form>
 
     <div class="text-center mt-4">
-      <a href="{% url 'tweet_list' %}" class="btn btn-outline-light">Back to Tweet List</a>
+      <a href="{% url 'tweet_list' %}" class="btn btn-outline-secondary px-4">
+        ← Back to timeline
+      </a>
     </div>
+
   </div>
 </div>
 
 <style>
-  /* page */
-  body {
-    background: #1e1e1e;        /* dark grey tone */
-    color: #e4e4e4;
-    min-height: 100vh;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* Layout */
+  .form-wrap {
+    max-width: 560px;
   }
 
-  /* container */
-  .form-wrap { padding: 10px; }
+  /* Title */
+  .aether-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #7DD3FC; /* softer blue */
+    margin-bottom: 0.25rem;
+  }
 
-  /* form box */
+  .form-subtitle {
+    font-size: 0.95rem;
+    color: #9CA3AF;
+    font-weight: 400;
+  }
+
+  /* Form card */
   .dark-form {
-    background: #2b2b2b;        /* slightly lighter grey for contrast */
-    border: 1px solid #3a3a3a;
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    background: linear-gradient(
+      180deg,
+      rgba(17,24,39,0.95),
+      rgba(17,24,39,0.85)
+    );
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow:
+      0 20px 40px rgba(0,0,0,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(6px);
   }
 
-  /* form fields */
-  .dark-form p { margin-bottom: 0.75rem; }
+  /* Form fields */
+  .dark-form p {
+    margin-bottom: 1rem;
+  }
+
   .dark-form label {
     display: block;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    color: #cccccc;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: #9CA3AF;
   }
+
   .dark-form input,
   .dark-form textarea,
   .dark-form select {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #444;
-    background: #1f1f1f;
-    color: #f0f0f0;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background-color: #0B0E14;
+    color: #E5E7EB;
     font-size: 0.95rem;
-    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .dark-form textarea { min-height: 110px; resize: vertical; }
+
+  .dark-form textarea {
+    min-height: 140px;
+    resize: vertical;
+  }
 
   .dark-form input::placeholder,
   .dark-form textarea::placeholder {
-    color: #888;
+    color: #6B7280;
   }
 
   .dark-form input:focus,
   .dark-form textarea:focus,
   .dark-form select:focus {
     outline: none;
-    border-color: #666;
-    box-shadow: 0 0 8px rgba(255,255,255,0.05);
+    border-color: #7DD3FC;
+    box-shadow: 0 0 0 3px rgba(125,211,252,0.15);
+    background-color: #0B0E14;
   }
 
-  /* buttons / links */
-  .btn-warning { --bs-btn-bg: #ffc107; --bs-btn-border-color: #ffc107; color: #111; }
-  .btn-outline-light {
-    color: #e4e4e4;
-    border-color: #666;
-    background: transparent;
-  }
-  .btn-outline-light:hover {
-    background: #333;
+  /* Buttons */
+  .btn-primary {
+    background-color: #7DD3FC;
+    border: none;
+    color: #0B0E14;
+    font-weight: 600;
+    letter-spacing: 0.3px;
   }
 
-  /* headings */
-  h1, h3 { text-shadow: 0 2px 6px rgba(0,0,0,0.7); }
+  .btn-primary:hover {
+    background-color: #38BDF8;
+  }
 
-  /* responsive tweaks */
+  .btn-outline-secondary {
+    color: #9CA3AF;
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .btn-outline-secondary:hover {
+    background-color: rgba(255,255,255,0.05);
+    color: #E5E7EB;
+  }
+
+  /* Mobile tweaks */
   @media (max-width: 576px) {
-    .dark-form { padding: 16px; }
-    h1 { font-size: 1.4rem; }
+    .aether-title {
+      font-size: 1.7rem;
+    }
+
+    .dark-form {
+      padding: 20px;
+    }
   }
 </style>
 {% endblock %}

@@ -7,85 +7,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Font: Press Start 2P -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 
     <style>
+        :root {
+            --bg-main: #0B0E14;
+            --text-primary: #E5E7EB;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+            --accent: #60A5FA; /* soft blue */
+            --border-subtle: rgba(255,255,255,0.08);
+        }
+
         body {
-            font-family: 'Press Start 2P', cursive !important;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
         }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        p {
+            color: var(--text-secondary);
+        }
+
+        small, .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Navbar */
+        .navbar {
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
         .navbar-brand {
-            font-size: 1rem;
+            color: var(--accent) !important;
+            font-weight: 700;
+            letter-spacing: 0.4px;
         }
-        .btn, .nav-link, .form-control, h1, h2, h3, h4, h5, h6 {
-            font-family: 'Press Start 2P', cursive !important;
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary) !important;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--accent);
+            border: none;
+            color: #0B0E14;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: #3B82F6;
+        }
+
+        .btn-outline-success {
+            border-color: var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline-success:hover {
+            background-color: rgba(255,255,255,0.05);
+            color: var(--text-primary);
+        }
+
+        .btn-danger {
+            background-color: #EF4444;
+            border: none;
+        }
+
+        /* Inputs */
+        .form-control {
+            background-color: #111827;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-control:focus {
+            background-color: #111827;
+            border-color: var(--accent);
+            color: var(--text-primary);
+            box-shadow: none;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 960px;
         }
     </style>
 
-    <title>
-        {% block title %}
-        AETHER
-        {% endblock %}
-    </title>
+    <title>{% block title %}AETHER{% endblock %}</title>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/tweet" style="color: #FFD700">AETHER</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <a class="navbar-brand" href="/tweet">AETHER</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/tweet">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link active" href="/tweet">Home</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search" method="get" action="{% url 'tweet_search' %}">
-                    <input class="form-control me-2" type="search" placeholder="Search tweets..." 
-                    name="q" aria-label="Search" required>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+
+                <form class="d-flex" method="get" action="{% url 'tweet_search' %}">
+                    <input class="form-control me-2" type="search"
+                        placeholder="Search tweets..." name="q" required>
+                    <button class="btn btn-outline-success" type="submit">
+                        Search
+                    </button>
                 </form>
 
-                <a href="{% url 'tweet_list' %}" class="btn btn-primary mx-2">Tweet Home</a>
+                <a href="{% url 'tweet_list' %}" class="btn btn-primary mx-2">
+                    Tweet Home
+                </a>
+
                 {% if user.is_authenticated %}
                 <form method="post" action="{% url 'logout'%}">
                     {% csrf_token %}
                     <button class="btn btn-danger" type="submit">Logout</button>
                 </form>
                 {% else %}
-                <a href="{% url 'register' %}" class="btn btn-primary mx-2">Register</a>
-                <a href="{% url 'login' %}" class="btn btn-success mx-2">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-primary mx-2">
+                    Register
+                </a>
+                <a href="{% url 'login' %}" class="btn btn-success mx-2">
+                    Login
+                </a>
                 {% endif %}
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container mt-4">
         {% block content %}
-        
         {% endblock %}
     </div>
 </body>

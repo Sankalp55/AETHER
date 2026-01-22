@@ -5,114 +5,140 @@ AETHER
 {% endblock %}
 
 {% block content %}
-<div class="container ">
-<h2 class="text-center mb-5 mt-5 " style="color: #FFD700;">WELCOME TO AETHER</h2>
+<div class="container">
 
-  
+  <!-- Page Title -->
+  <h2 class="text-center my-5 page-title">
+    Welcome to AETHER
+  </h2>
 
+  <!-- Tweets -->
   <div class="row g-4 justify-content-center">
     {% for tweet in tweets %}
       <div class="col-md-4">
-        <div class="tweet-card shadow-sm h-100">
-          {% if tweet.photo %}
-            <img src="{{tweet.photo.url}}" class="tweet-img" alt="Tweet image">
-          {% endif %}
-          <div class="tweet-body">
-            <h5 class="tweet-user">{{tweet.user.username}}</h5>
-            <p class="tweet-text">{{tweet.text}}</p>
-            <div class="d-flex justify-content-between mt-3">
+        <div class="tweet-card h-100">
 
-              {% if tweet.user == user %}  
-              <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-outline-light">Edit</a>
-              <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
-              {% endif %}
+          {% if tweet.photo %}
+            <img src="{{ tweet.photo.url }}" class="tweet-img" alt="Tweet image">
+          {% endif %}
+
+          <div class="tweet-body">
+            <h5 class="tweet-user">
+              @{{ tweet.user.username }}
+            </h5>
+
+            <p class="tweet-text">
+              {{ tweet.text }}
+            </p>
+
+            {% if tweet.user == user %}
+            <div class="d-flex justify-content-end gap-2 mt-3">
+              <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-sm btn-outline-secondary">
+                Edit
+              </a>
+              <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-sm btn-outline-danger">
+                Delete
+              </a>
             </div>
+            {% endif %}
           </div>
+
         </div>
       </div>
     {% empty %}
-      <p class="text-center text-muted">No tweets yet. Be the first to post!</p>
+      <p class="text-center text-muted">
+        No tweets yet. Be the first to post!
+      </p>
     {% endfor %}
   </div>
-  <div class="text-center mt-4">
-    <a class="btn btn-warning btn-lg" href="{% url 'tweet_create' %}">+ Create a Tweet</a>
+
+  <!-- Create Tweet -->
+  <div class="text-center mt-5">
+    <a class="btn btn-primary btn-lg px-4" href="{% url 'tweet_create' %}">
+      + Create Tweet
+    </a>
   </div>
+
 </div>
 
 <style>
-  body {
-    background: #1e1e1e; /* dark grey */
-    color: #eaeaea;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* Page title */
+  .page-title {
+    color: #E5E7EB;
+    font-weight: 600;
+    letter-spacing: 0.4px;
   }
 
-  /* tweet card */
+  /* Tweet card */
   .tweet-card {
-    background: #2b2b2b;
-    border: 1px solid #3a3a3a;
-    border-radius: 15px;
+    background-color: #111827;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
     overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .tweet-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  /* tweet image */
+  .tweet-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+  }
+
+  /* Tweet image */
   .tweet-img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
-  /* card body */
+  /* Card body */
   .tweet-body {
-    padding: 1rem;
+    padding: 16px;
   }
 
   .tweet-user {
-    color: #ffc107; /* yellow highlight */
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    color: #60A5FA;
+    font-weight: 500;
+    margin-bottom: 6px;
   }
 
   .tweet-text {
-    color: #ddd;
+    color: #9CA3AF;
     font-size: 0.95rem;
-    line-height: 1.4;
+    line-height: 1.5;
   }
 
-  /* buttons */
-  .btn-outline-light {
-    border-color: #bbb;
-    color: #eaeaea;
+  /* Buttons */
+  .btn-outline-secondary {
+    color: #9CA3AF;
+    border-color: rgba(255,255,255,0.12);
   }
-  .btn-outline-light:hover {
-    background: #444;
-    color: #fff;
+
+  .btn-outline-secondary:hover {
+    background-color: rgba(255,255,255,0.05);
+    color: #E5E7EB;
   }
+
   .btn-outline-danger {
-    border-color: #ff4d4d;
-    color: #ff4d4d;
+    border-color: #F87171;
+    color: #F87171;
   }
+
   .btn-outline-danger:hover {
-    background: #ff4d4d;
-    color: #fff;
+    background-color: #F87171;
+    color: #0B0E14;
   }
 
-  .btn-warning {
-    color: #111;
+  /* Create button */
+  .btn-primary {
+    background-color: #60A5FA;
+    border: none;
     font-weight: 600;
-    border-radius: 30px;
-    padding: 10px 20px;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    color: #0B0E14;
   }
 
-  .btn-warning:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  .btn-primary:hover {
+    background-color: #3B82F6;
   }
 </style>
 {% endblock %}
